@@ -24,7 +24,7 @@ no_index:
 provides:
   App::ForkProve:
     file: lib/App/ForkProve.pm
-    version: v0.1.0
+    version: v0.1.1
   App::ForkProve::SourceHandler:
     file: lib/App/ForkProve/SourceHandler.pm
 requires:
@@ -34,4 +34,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/miyagawa/forkprove.git
-version: 0.1.0
+version: 0.1.1
