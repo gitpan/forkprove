@@ -2,7 +2,7 @@ NAME
     forkprove - forking prove
 
 SYNOPSIS
-      forkprove -MMoose -MCatalyst -MDBIx::Class -lr t
+      forkprove -MMoose -MCatalyst -MDBIx::Class -j8 -lr t
 
 DESCRIPTION
     forkprove is a forking version of prove that allows you to preload
@@ -10,6 +10,17 @@ DESCRIPTION
     makes most of the tests to run faster without an overhead of loading the
     same modules again and again, while having an isolated, clean testing
     environment with a fork.
+
+    It works well with parallel testing as well, combined with "-j" option.
+
+CONFIGURATION
+    You can specify an environment variable "PERL_FORKPROVE_IGNORE" to
+    contain a regular expression to ignore files to test with forkprove.
+
+      PERL_FORKPROVE_IGNORE=no-preload forkprove -lr t
+
+    This will run the tests with "/no-preload/" in its filenames and
+    directory and run with the standard perl execution via prove.
 
 CAVEATS
   Test::More
@@ -19,7 +30,9 @@ CAVEATS
   Known patterns to fail
     Following kind of tests are known to fail.
 
-    *   Tests that rely on the value of $FindBin::Bin.
+    *   Tests that rely on the value of $FindBin::Bin. There's a workaround
+        in forkprove to correct the value, but if your test relies on the
+        timing of initialization of FindBin, it might fail.
 
     *   Tests that expects "END" block to run after each ".t"
 
@@ -31,6 +44,15 @@ WHY
     environment by making a copy of the process with fork for each test,
     which means it could run your tests that rely on the singleton state
     etc. without modifying the code to run with Test::Aggregate.
+
+PERFORMANCE
+    Your mileage might vary, if forkprove runs your tests faster or not. For
+    lightweight modules, we've found that using forkprove doesn't make any
+    siginificant difference, due to the fact that fork overhead nullifies
+    the benefit of preloading modules.
+
+    On the other hand, test suite with Moose, Catalyst and Dist::Zilla seems
+    to run 80-100% faster with forkprove and "-jN" option.
 
 AUTHOR
     Tatsuhiko Miyagawa

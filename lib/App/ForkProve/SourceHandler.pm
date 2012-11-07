@@ -8,7 +8,12 @@ TAP::Parser::IteratorFactory->register_handler(__PACKAGE__);
 
 sub can_handle {
     my($class, $src) = @_;
-    return 1 if $src->meta->{file}{ext} eq '.t';
+    return 1 if $src->meta->{file}{ext} eq '.t' && !$class->ignore($src->meta->{file});
+}
+
+sub ignore {
+    my($class, $file) = @_;
+    $ENV{PERL_FORKPROVE_IGNORE} && ($file->{dir} . $file->{basename}) =~ /$ENV{PERL_FORKPROVE_IGNORE}/;
 }
 
 sub make_iterator {
@@ -37,24 +42,19 @@ sub _run {
     # passed as t/foo.t without a leading path
     local $0 = $t;
     local @INC = (@$inc, @INC);
-    _setup();
-    eval qq{ package main; do \$t; 1 } or die $!;
-    _teardown();
-}
 
-sub _setup {
-    # $FindBin::Bin etc. has to be refreshed with the current $0
+    # if FindBin is preloaded, reset it with the new $0
     if (defined &FindBin::init) {
         FindBin::init()
     }
-}
 
-sub _teardown {
-    # Tests with no_plan rely on END to call done_testing
-    if (defined $Test::Builder::Test) {
-        local $?; # since we aren't in an END block, this isn't relevant
-        $Test::Builder::Test->_ending;
-    }
+    # reset the state of empty pattern matches, so that they have the same
+    # behavior as running in a clean process.
+    # see "The empty pattern //" in perlop.
+    # note that this has to be dynamically scoped and can't go to other subs
+    "" =~ /^/;
+
+    eval q{ package main; do $t; 1 } or die $!;
 }
 
 1;
