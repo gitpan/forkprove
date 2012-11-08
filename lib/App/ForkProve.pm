@@ -2,7 +2,7 @@ package App::ForkProve;
 
 use strict;
 use 5.008_001;
-our $VERSION = '0.2.2';
+our $VERSION = '0.2.3';
 
 use App::Prove;
 use Getopt::Long ':config' => 'pass_through';
@@ -39,8 +39,18 @@ sub run {
     }
 
     for (@modules) {
-        local @INC = (@inc, @INC);
         my($module, @import) = split /[=,]/;
+
+        my $warn = sub {
+            if ($_[1] eq 'Test/Builder.pm') {
+                require Carp;
+                Carp::cluck("Loading $module ended up requiring Test::Builder, " .
+                  "which is known to cause issues with forkprove.\n");
+            }
+            return;
+        };
+        local @INC = ($warn, @inc, @INC);
+
         eval "require $module" or die $@;
         $module->import(@import);
     }
