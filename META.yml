@@ -24,7 +24,7 @@ no_index:
 provides:
   App::ForkProve:
     file: lib/App/ForkProve.pm
-    version: v0.2.1
+    version: v0.2.2
   App::ForkProve::PipeIterator:
     file: lib/App/ForkProve/PipeIterator.pm
   App::ForkProve::SourceHandler:
@@ -37,4 +37,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/miyagawa/forkprove.git
-version: 0.2.1
+version: 0.2.2

@@ -22,6 +22,9 @@ sub make_iterator {
     my $path = $src->meta->{file}{dir} . $src->meta->{file}{basename};
     my @inc = map { s/^-I//; $_ } grep { /^-I/ } @{ $src->switches };
 
+    $class->_autoflush(\*STDOUT);
+    $class->_autoflush(\*STDERR);
+
     pipe my $reader, my $writer;
     my $pid = fork;
     if ($pid) {
@@ -54,7 +57,17 @@ sub _run {
     # note that this has to be dynamically scoped and can't go to other subs
     "" =~ /^/;
 
-    eval q{ package main; do $t or die $@ || $! } or die $@;
+    # do() can't tell if a test can't be read or a .t's last statement
+    # returned undef with $! set somewhere. Fortunately in case of
+    # prove, non-readable .t will fail earlier in prove itself.
+    eval q{ package main; do $t; die $@ if $@; 1 } or die $@;
+}
+
+sub _autoflush {
+    my ( $class, $flushed ) = @_;
+    my $old_fh = select $flushed;
+    $| = 1;
+    select $old_fh;
 }
 
 1;
