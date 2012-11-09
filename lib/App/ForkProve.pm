@@ -2,7 +2,7 @@ package App::ForkProve;
 
 use strict;
 use 5.008_001;
-our $VERSION = '0.3.0';
+use version; our $VERSION = "v0.4.0";
 
 use App::Prove;
 use Getopt::Long ':config' => 'pass_through';
@@ -10,7 +10,6 @@ use Getopt::Long ':config' => 'pass_through';
 use App::ForkProve::SourceHandler;
 
 our @Blacklists = qw( Test::SharedFork );
-our @Captured;
 
 sub run {
     my($class, @args) = @_;
@@ -41,9 +40,11 @@ sub run {
         unshift @inc, 'blib/lib', 'blib/arch';
     }
 
+
     for (@modules) {
         my($module, @import) = split /[=,]/;
-        local @INC = ($class->blacklist_sub, @inc, @INC);
+        local @INC{map pkg_to_file($_), @Blacklists} = (__FILE__) x scalar(@Blacklists);
+        local @INC = (@inc, @INC);
 
         eval "require $module" or die $@;
         $module->import(@import);
@@ -54,38 +55,12 @@ sub run {
     $app->run;
 }
 
-sub file_to_pkg {
-    local $_ = shift;
-    s|/|::|g;
-    s|\.pm$||;
-    $_;
-}
-
 sub pkg_to_file {
     local $_ = shift;
     s|::|/|g;
     "$_.pm";
 }
 
-sub blacklist_sub {
-    my $class = shift;
-
-    my %blacklisted = map { $_ => 1 } @Blacklists;
-
-    return sub {
-        my($coderef, $filename) = @_;
-
-        my $package = file_to_pkg($filename);
-        if ($blacklisted{$package}) {
-            my @content = ("package $package; push \@App::ForkProve::Captured, __PACKAGE__; 1;");
-            return sub {
-                return ($_ = shift @content) ? 1 : 0;
-            };
-        }
-
-        return;
-    };
-}
 
 1;
 __END__
