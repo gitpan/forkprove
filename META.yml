@@ -3,10 +3,11 @@ abstract: 'forking prove'
 author:
   - 'Tatsuhiko Miyagawa <miyagawa@bulknews.net>'
 build_requires:
+  Module::Build: 0.3601
   Test::More: 0.88
   Test::Requires: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.30
+  Module::Build: 0.3601
 dynamic_config: 0
 generated_by: 'Dist::Milla version v1.0.0, Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880'
 license: perl
@@ -32,7 +33,7 @@ resources:
   bugtracker: https://github.com/miyagawa/forkprove/issues
   homepage: https://github.com/miyagawa/forkprove
   repository: https://github.com/miyagawa/forkprove.git
-version: v0.4.6
+version: v0.4.7
 x_contributors:
   - 'Jesse Luehrs <doy@tozt.net>'
   - 'Jonathan Swartz <swartz@pobox.com>'
