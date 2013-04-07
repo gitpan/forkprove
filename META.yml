@@ -3,14 +3,12 @@ abstract: 'forking prove'
 author:
   - 'Tatsuhiko Miyagawa <miyagawa@bulknews.net>'
 build_requires:
-  ExtUtils::MakeMaker: 6.59
   Test::More: 0.88
   Test::Requires: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.59
-distribution_type: module
-dynamic_config: 1
-generated_by: 'Module::Install version 1.06'
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Milla version v1.0.0, Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,24 +16,24 @@ meta-spec:
 name: forkprove
 no_index:
   directory:
-    - inc
     - t
     - xt
-provides:
-  App::ForkProve:
-    file: lib/App/ForkProve.pm
-    version: v0.4.5
-  App::ForkProve::PipeIterator:
-    file: lib/App/ForkProve/PipeIterator.pm
-  App::ForkProve::SourceHandler:
-    file: lib/App/ForkProve/SourceHandler.pm
+    - inc
+    - share
+    - eg
+    - examples
 requires:
   App::Prove: 3.25
   TAP::Harness: 3.25
   parent: 0.221
-  perl: 5.8.1
+  perl: 5.008001
   version: 0.77
 resources:
-  license: http://dev.perl.org/licenses/
-  repository: git://github.com/miyagawa/forkprove.git
-version: v0.4.5
+  bugtracker: https://github.com/miyagawa/forkprove/issues
+  homepage: https://github.com/miyagawa/forkprove
+  repository: https://github.com/miyagawa/forkprove.git
+version: v0.4.6
+x_contributors:
+  - 'Jesse Luehrs <doy@tozt.net>'
+  - 'Jonathan Swartz <swartz@pobox.com>'
+  - 'Shigeki Morimoto <github@morimo.to>'

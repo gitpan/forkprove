@@ -2,14 +2,14 @@ package App::ForkProve;
 
 use strict;
 use 5.008_001;
-use version; our $VERSION = "v0.4.5";
+use version; our $VERSION = "v0.4.6";
 
 use App::Prove;
 use Getopt::Long ':config' => qw(bundling pass_through no_ignore_case);
 
 use App::ForkProve::SourceHandler;
 
-our @Blacklists = qw( Test::SharedFork Test::LeakTrace );
+our @Blacklists = qw( Test::SharedFork );
 
 sub run {
     my($class, @args) = @_;
