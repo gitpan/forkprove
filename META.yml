@@ -3,13 +3,12 @@ abstract: 'forking prove'
 author:
   - 'Tatsuhiko Miyagawa <miyagawa@bulknews.net>'
 build_requires:
-  Module::Build: 0.3601
-  Test::More: 0.88
+  Test::More: 0.94
   Test::Requires: 0
 configure_requires:
-  Module::Build: 0.3601
+  ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Milla version v1.0.0, Dist::Zilla version 4.300033, CPAN::Meta::Converter version 2.130880'
+generated_by: 'Dist::Milla version v1.0.2, Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.131560'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -33,7 +32,7 @@ resources:
   bugtracker: https://github.com/miyagawa/forkprove/issues
   homepage: https://github.com/miyagawa/forkprove
   repository: https://github.com/miyagawa/forkprove.git
-version: v0.4.7
+version: v0.4.8
 x_contributors:
   - 'Jesse Luehrs <doy@tozt.net>'
   - 'Jonathan Swartz <swartz@pobox.com>'
