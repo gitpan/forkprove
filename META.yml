@@ -32,7 +32,7 @@ resources:
   bugtracker: https://github.com/miyagawa/forkprove/issues
   homepage: https://github.com/miyagawa/forkprove
   repository: https://github.com/miyagawa/forkprove.git
-version: v0.4.8
+version: v0.4.9
 x_contributors:
   - 'Jesse Luehrs <doy@tozt.net>'
   - 'Jonathan Swartz <swartz@pobox.com>'

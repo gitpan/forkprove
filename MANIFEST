@@ -13,8 +13,11 @@ lib/App/ForkProve/PipeIterator.pm
 lib/App/ForkProve/SourceHandler.pm
 script/forkprove
 t/Rand.pm
+t/UsesData.pm
 t/argv.t
 t/data.t
+t/data_preload1.t
+t/data_preload2.t
 t/dollar_bang.t
 t/getopt_long.t
 t/main.t

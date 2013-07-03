@@ -1,5 +1,8 @@
 Revision history for Perl extension App::ForkProve
 
+v0.4.9  2013-07-03 16:04:18 PDT
+        - ensure DATA is reset for preloaded .pm modules (doy)
+
 v0.4.8  2013-06-20 22:29:08 PDT
         - Fix Test::More dependencies for subtest (doy)
 
